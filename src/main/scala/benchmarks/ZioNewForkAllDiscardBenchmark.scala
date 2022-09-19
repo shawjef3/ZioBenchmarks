@@ -26,7 +26,9 @@ class ZioNewForkAllDiscardBenchmark {
     Unsafe.unsafe { implicit unsafe =>
       Runtime.default.unsafe.run {
         newForkAllDiscard {
-          Chunk.fill(count)(ZIO.attempt(()))
+          Chunk.fill(count) {
+            ZIO.attempt(())
+          }
         }.flatMap(_.join)
       }.getOrThrow()
     }
